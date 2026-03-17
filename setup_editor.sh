@@ -9,7 +9,6 @@ BACKUP_DIR="$PROJECT_DIR/editor_backups"
 # Path Editors
 PATH_VSCODE="$HOME/.config/Code/User/settings.json"
 PATH_ANTIGRAVITY="$HOME/.config/Antigravity/User/settings.json"
-PATH_SUBLIME="$HOME/.config/sublime-text/Packages/User/Preferences.sublime-settings"
 
 mkdir -p "$BACKUP_DIR"
 
@@ -25,24 +24,24 @@ while true; do
     echo "=========================================================="
     echo -n " 1. AntiGravity Editor   : " && check_install "$PATH_ANTIGRAVITY"
     echo -n " 2. VS Code Standard     : " && check_install "$PATH_VSCODE"
-    echo -n " 3. Sublime Text         : " && check_install "$PATH_SUBLIME"
     echo "----------------------------------------------------------"
     echo " A. Backup Semua Config ke Folder Project"
-    echo " B. Restore/Terapkan ASCII-Ready Config"
+    echo " B. Terapkan ASCII Config (Windows 1252)"
     echo " X. Keluar"
     echo "=========================================================="
     read -p "Pilih Menu: " opt
 
     case ${opt^^} in
         A)
-            [ -f "$PATH_ANTIGRAVITY" ] && cp "$PATH_ANTIGRAVITY" "$BACKUP_DIR/antigravity.json" && echo "✅ AntiGravity Backed up"
-            [ -f "$PATH_VSCODE" ] && cp "$PATH_VSCODE" "$BACKUP_DIR/vscode.json" && echo "✅ VSCode Backed up"
-            sleep 2 ;;
+            [ -f "$PATH_ANTIGRAVITY" ] && cp "$PATH_ANTIGRAVITY" "$BACKUP_DIR/antigravity.json"
+            [ -f "$PATH_VSCODE" ] && cp "$PATH_VSCODE" "$BACKUP_DIR/vscode.json"
+            echo "Backup Berhasil!" && sleep 2 ;;
         B)
-            echo '{"editor.fontFamily": "Cascadia Code, Courier New", "editor.lineHeight": 0, "files.encoding": "cp437"}' > "$BACKUP_DIR/ascii_fix.json"
-            [ -f "$PATH_ANTIGRAVITY" ] && cp "$BACKUP_DIR/ascii_fix.json" "$PATH_ANTIGRAVITY" && echo "🚀 AntiGravity Optimized!"
-            [ -f "$PATH_VSCODE" ] && cp "$BACKUP_DIR/ascii_fix.json" "$PATH_VSCODE" && echo "🚀 VSCode Optimized!"
-            sleep 2 ;;
+            # Menggunakan Windows 1252 sesuai permintaan
+            CONFIG_DATA='{"editor.fontFamily": "Cascadia Code, Courier New", "editor.lineHeight": 0, "files.encoding": "windows1252", "editor.fontLigatures": false}'
+            [ -f "$PATH_ANTIGRAVITY" ] && echo "$CONFIG_DATA" > "$PATH_ANTIGRAVITY"
+            [ -f "$PATH_VSCODE" ] && echo "$CONFIG_DATA" > "$PATH_VSCODE"
+            echo "Konfigurasi Windows 1252 Diterapkan!" && sleep 2 ;;
         X) exit ;;
     esac
 done
