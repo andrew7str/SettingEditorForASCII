@@ -15,13 +15,13 @@ echo ==========================================================
 set "VS_PATH=%APPDATA%\Code\User\settings.json"
 set "AG_PATH=%APPDATA%\Antigravity\User\settings.json"
 
-echo  1. AntiGravity Editor   : !AG_STATUS!
+echo  1. AntiGravity Editor   : 
 if exist "%AG_PATH%" (echo [TERDETEKSI]) else (echo [TIDAK ADA])
 echo  2. VS Code Standard     : 
 if exist "%VS_PATH%" (echo [TERDETEKSI]) else (echo [TIDAK ADA])
 echo ----------------------------------------------------------
 echo  [A] Backup Semua Config ke Project
-echo  [B] Terapkan ASCII-Ready Config (Font + CP437)
+echo  [B] Terapkan Config ASCII (Windows 1252)
 echo  [X] Keluar
 echo ==========================================================
 set /p opt="Pilih Menu: "
@@ -29,15 +29,16 @@ set /p opt="Pilih Menu: "
 if /i "%opt%"=="A" (
     if exist "%AG_PATH%" copy /y "%AG_PATH%" "%BACKUP_DIR%\antigravity.json"
     if exist "%VS_PATH%" copy /y "%VS_PATH%" "%BACKUP_DIR%\vscode.json"
-    echo ✅ Backup selesai di folder editor_backups
+    echo Backup selesai!
     pause
     goto menu
 )
 if /i "%opt%"=="B" (
-    echo {"editor.fontFamily": "Cascadia Code", "editor.lineHeight": 0, "files.encoding": "cp437"} > "%BACKUP_DIR%\temp.json"
+    :: Membuat file setting dengan encoding windows1252
+    echo {"editor.fontFamily": "Cascadia Code", "editor.lineHeight": 0, "files.encoding": "windows1252", "editor.fontLigatures": false} > "%BACKUP_DIR%\temp.json"
     if exist "%AG_PATH%" copy /y "%BACKUP_DIR%\temp.json" "%AG_PATH%"
     if exist "%VS_PATH%" copy /y "%BACKUP_DIR%\temp.json" "%VS_PATH%"
-    echo 🚀 ASCII Config Applied!
+    echo ASCII Config (Windows 1252) Berhasil Diterapkan!
     pause
     goto menu
 )
