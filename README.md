@@ -30,6 +30,10 @@ Tool ini secara otomatis mengatur editor kamu agar:
 1. Place `setup_editor.bat` in your project folder.
 2. Double-click the file to run.
 
+Using install font support Lucida Console or Consolas :
+`sudo apt install ttf-mscorefonts-installer`
+
+
 ## 📖 ASCII Table Reference
 The custom display uses the Extended ASCII table (Codes 128-255). For a full list of characters used in this project, visit:
 👉 [Andrew-exe ASCII for CMD](https://andrew-exe.blogspot.com/2024/10/ascii-for-cmd.html)
